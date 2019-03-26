@@ -149,4 +149,15 @@ child(X, Y) :-
 	parent(Y, X).
 
 
+%-----------------------------------------------------
+% DEFINE SIBLING RELATIONSHIP
+
+sibling(X, Y) :-
+	parent(Z, X),
+	parent(Z, Y),
+	X \= Y.
+
+
+
+
 
