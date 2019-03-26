@@ -98,11 +98,11 @@ parent(unknown_father_greyjoy, alannys_greyjoy).
 parent(balon_greyjoy, rodrick_greyjoy).
 parent(balon_greyjoy, maron_greyjoy).
 parent(balon_greyjoy, yara_greyjoy).
-parent(balon_greyjoy, theor_greyjoy).
+parent(balon_greyjoy, theon_greyjoy).
 parent(alannys_harlaw, rodrick_greyjoy).
 parent(alannys_harlaw, maron_greyjoy).
 parent(alannys_harlaw, yara_greyjoy).
-parent(alannys_harlaw, theor_greyjoy).
+parent(alannys_harlaw, theon_greyjoy).
 
 
 
@@ -143,6 +143,85 @@ parent(selyse_baratheon, shireen_baratheon).
 
 
 %-----------------------------------------------------
+% ADD GENDER TO DATABASE
+
+male(aegon_targaryen).
+male(aegon_V_targaryen).
+male(aerys_targaryen).
+male(balon_greyjoy).
+male(benjen_stark).
+male(bran_stark).
+male(brandon_stark).
+male(daeron_targaryen).
+male(doran_martell).
+male(duncan_targaryen).
+male(eddard_stark).
+male(gendry).
+male(jaime_lannister).
+male(joffery_lannister).
+male(jon_snow).
+male(kevan_lannister).
+male(lancel_lannister).
+male(lewyn_martell).
+male(loras_tyrell).
+male(luthor_tyrell).
+male(mace_tyrell).
+male(maron_greyjoy).
+male(martyn_lannister).
+male(oberyn_martell).
+male(renly_baratheon).
+male(rhaegar_targaryen).
+male(rickard_stark).
+male(rickon_stark).
+male(robb_stark).
+male(robert_baratheon).
+male(rodrick_greyjoy).
+male(stannis_baratheon).
+male(steffon_baratheon).
+male(theon_greyjoy).
+male(tommen_lannister).
+male(trystane_martell).
+male(tyene_sand).
+male(tyrion_lannister).
+male(tytos_lannister).
+male(tywin_lannister).
+male(unknown_father_greyjoy).
+male(viserys_targaryen).
+male(willem_lannister).
+female(alannys_greyjoy).
+female(alannys_harlaw).
+female(arya_stark).
+female(cassana_estermont).
+female(catelyn_stark)).
+female(cersei_lannister).
+female(daenerys_targaryen).
+female(ella_martell).
+female(ellaria_sand).
+female(joanna_lannister).
+female(lyanna_stark).
+female(margaery_tyrell).
+female(mellario_of_norvos).
+female(myrcella_lannister).
+female(nymeria_sand).
+female(obara_sand).
+female(olenna_tyrell).
+female(rhaella_targaryen).
+female(rhaenys_targaryen).
+female(sansa_stark).
+female(sarella_sand).
+female(selyse_baratheon).
+female(shireen_baratheon).
+female(unknown_mother1_sand).
+female(unknown_mother2_sand).
+female(unknown_mother3_sand).
+female(unknown_mother_greyjoy).
+female(unknown_mother_lannister).
+female(unknown_mother_martell).
+female(unknown_mother_stark).
+female(unknown_mother_targaryen).
+female(yara_greyjoy).
+
+%-----------------------------------------------------
 % DEFINE CHILD RELATIONSHIP
 
 child(X, Y) :-
@@ -156,8 +235,6 @@ sibling(X, Y) :-
 	parent(Z, X),
 	parent(Z, Y),
 	X \= Y.
-
-
 
 
 
