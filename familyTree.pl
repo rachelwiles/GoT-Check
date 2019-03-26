@@ -142,6 +142,7 @@ parent(stannis_baratheon, shireen_baratheon).
 parent(selyse_baratheon, shireen_baratheon).
 
 
+
 %-----------------------------------------------------
 % ADD GENDER TO DATABASE
 
@@ -192,7 +193,7 @@ female(alannys_greyjoy).
 female(alannys_harlaw).
 female(arya_stark).
 female(cassana_estermont).
-female(catelyn_stark)).
+female(catelyn_stark).
 female(cersei_lannister).
 female(daenerys_targaryen).
 female(ella_martell).
@@ -221,11 +222,33 @@ female(unknown_mother_stark).
 female(unknown_mother_targaryen).
 female(yara_greyjoy).
 
+
+
+%-----------------------------------------------------
+% DEFINE PARENT RELATIONSHIP
+
+mother(X, Y) :-
+	parent(X, Y),
+	female(X).
+
+father(X, Y) :-
+	parent(X, Y),
+	male(X).
+
+
 %-----------------------------------------------------
 % DEFINE CHILD RELATIONSHIP
 
 child(X, Y) :-
 	parent(Y, X).
+
+daughter(X, Y) :-
+	child(X, Y),
+	female(X).
+
+son(X, Y) :-
+	child(X, Y),
+	male(X).
 
 
 %-----------------------------------------------------
@@ -235,6 +258,15 @@ sibling(X, Y) :-
 	parent(Z, X),
 	parent(Z, Y),
 	X \= Y.
+
+sister(X, Y) :-
+	sibling(X, Y),
+	female(X).
+
+brother(X, Y) :-
+	sibling(X, Y),
+	male(X).
+
 
 
 
