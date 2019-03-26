@@ -268,5 +268,25 @@ brother(X, Y) :-
 	male(X).
 
 
+%-----------------------------------------------------
+% DEFINE FURTHER RELATIONSHIPS
 
+aunt(X, Y) :-
+	parent(Z, Y),
+	sibling(Z, X), 
+	female(X).
 
+uncle(X, Y) :-
+	parent(Z, Y),
+	sibling(Z, X), 
+	male(X).
+
+neice(X, Y) :-
+	parent(Z, X),
+	sibling(Z, Y),
+	female(X).
+
+nephew(X, Y) :-
+	parent(Z, X),
+	sibling(Z, Y),
+	male(X).
