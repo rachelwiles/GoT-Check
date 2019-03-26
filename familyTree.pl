@@ -140,3 +140,13 @@ parent(cassana_estermont, renly_baratheon).
 parent(robert_baratheon, gendry).
 parent(stannis_baratheon, shireen_baratheon).
 parent(selyse_baratheon, shireen_baratheon).
+
+
+%-----------------------------------------------------
+% DEFINE CHILD RELATIONSHIP
+
+child(X, Y) :-
+	parent(Y, X).
+
+
+
