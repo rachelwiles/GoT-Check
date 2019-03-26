@@ -290,3 +290,10 @@ nephew(X, Y) :-
 	parent(Z, X),
 	sibling(Z, Y),
 	male(X).
+
+
+%-----------------------------------------------------
+% FIND RIGHTFUL HEIR
+
+rightful_heir(X) :-
+	son(X, robert_baratheon).
