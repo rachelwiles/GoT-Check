@@ -297,3 +297,47 @@ nephew(X, Y) :-
 
 rightful_heir(X) :-
 	son(X, robert_baratheon).
+
+
+%-----------------------------------------------------
+% FIND RELATIONSHIP BETWEEN
+
+relationship(X, Y) :-
+	mother(X, Y),
+	format("~w is the mother of ~w", [X, Y]).
+
+relationship(X, Y) :-
+	father(X, Y),
+	format("~w is the father of ~w", [X, Y]).
+
+relationship(X, Y) :-
+	daughter(X, Y),
+	format("~w is the daughter of ~w", [X, Y]).
+
+relationship(X, Y) :-
+	son(X, Y),
+	format("~w is the son of ~w", [X, Y]).
+
+relationship(X, Y) :-
+	sister(X, Y),
+	format("~w is the sister of ~w", [X, Y]).
+
+relationship(X, Y) :-
+	brother(X, Y),
+	format("~w is the brother of ~w", [X, Y]).
+
+relationship(X, Y) :-
+	aunt(X, Y),
+	format("~w is the aunt of ~w", [X, Y]).
+
+relationship(X, Y) :-
+	uncle(X, Y),
+	format("~w is the uncle of ~w", [X, Y]).
+
+relationship(X, Y) :-
+	neice(X, Y),
+	format("~w is the neice of ~w", [X, Y]).
+
+relationship(X, Y) :-
+	nephew(X, Y),
+	format("~w is the nephew of ~w", [X, Y]).
