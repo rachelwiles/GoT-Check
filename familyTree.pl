@@ -1,9 +1,8 @@
 
 
 %-----------------------------------------------------
-% DATABASE OF ALL MAJOR HOUSES
+% DATABASE OF ALL MAJOR HOUSES - (done)
 % Accurate as of end of season 7 (excluding events in the books)
-
 
 % House Stark
 % 1 unknown Stark
@@ -142,7 +141,7 @@ parent(selyse_baratheon, shireen_baratheon).
 
 
 %-----------------------------------------------------
-% ADD GENDER TO DATABASE
+% ADD GENDER TO DATABASE - (done)
 
 male(aegon_targaryen).
 male(aegon_V_targaryen).
@@ -220,10 +219,12 @@ female(unknown_mother_stark).
 female(unknown_mother_targaryen).
 female(yara_greyjoy).
 
+%-----------------------------------------------------
+% ALIVE OR DEAD
 
 
 %-----------------------------------------------------
-% DEFINE PARENT RELATIONSHIP
+% DEFINE PARENT RELATIONSHIP - just using parent (done)
 
 mother(X, Y) :-
 	parent(X, Y),
@@ -235,17 +236,17 @@ father(X, Y) :-
 
 
 %-----------------------------------------------------
-% DEFINE CHILD RELATIONSHIP
+% DEFINE CHILD RELATIONSHIP - just using parent (done)
 
 child(X, Y) :-
 	parent(Y, X).
 
 daughter(X, Y) :-
-	child(X, Y),
+	parent(Y, X),
 	female(X).
 
 son(X, Y) :-
-	child(X, Y),
+	parent(Y, X),
 	male(X).
 
 
@@ -255,7 +256,7 @@ son(X, Y) :-
 sibling(X, Y) :-
 	parent(Z, X),
 	parent(Z, Y),
-	X \= Y.
+	X \= Y.			% Stops it returning themself as a sibling
 
 sister(X, Y) :-
 	sibling(X, Y),
@@ -299,7 +300,7 @@ nephew(X, Y) :-
 	
 
 %-----------------------------------------------------
-% FIND RIGHTFUL HEIR
+% FIND RIGHTFUL HEIR - (done)
 
 rightful_heir(X) :-
 	parent(robert_baratheon, X),
@@ -319,6 +320,7 @@ relationship(X, Y) :-
 
 relationship(X, Y) :-
 	daughter(X, Y),
+	format("~w is the daughter of ~w", [X, Y]).
 
 relationship(X, Y) :-
 	son(X, Y),
