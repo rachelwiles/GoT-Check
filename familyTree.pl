@@ -9,12 +9,10 @@
 % 1 unknown Stark
 parent(rickard_stark, brandon_stark).
 parent(rickard_stark, eddard_stark).
-parent(rickard_stark, catelyn_stark).
 parent(rickard_stark, benjen_stark).
 parent(rickard_stark, lyanna_stark).
 parent(unknown_mother_stark, brandon_stark).
 parent(unknown_mother_stark, eddard_stark).
-parent(unknown_mother_stark, catelyn_stark).
 parent(unknown_mother_stark, benjen_stark).
 parent(unknown_mother_stark, lyanna_stark).
 parent(eddard_stark, robb_stark).
@@ -272,31 +270,40 @@ brother(X, Y) :-
 % DEFINE FURTHER RELATIONSHIPS
 
 aunt(X, Y) :-
-	parent(Z, Y),
-	sibling(Z, X), 
+	parent(Z, X),
+	parent(Z, W),
+	parent(W, Y),
+	X \= W,
 	female(X).
 
 uncle(X, Y) :-
-	parent(Z, Y),
-	sibling(Z, X), 
+	parent(Z, X),
+	parent(Z, W),
+	parent(W, Y),
+	X \= W,
 	male(X).
 
 neice(X, Y) :-
 	parent(Z, X),
-	sibling(Z, Y),
+	parent(W, Z),
+	parent(W, Y),
+	Z \= Y,
 	female(X).
 
 nephew(X, Y) :-
 	parent(Z, X),
-	sibling(Z, Y),
+	parent(W, Z),
+	parent(W, Y),
+	Z \= Y,
 	male(X).
-
+	
 
 %-----------------------------------------------------
 % FIND RIGHTFUL HEIR
 
 rightful_heir(X) :-
-	son(X, robert_baratheon).
+	parent(robert_baratheon, X),
+	male(X).
 
 
 %-----------------------------------------------------
@@ -312,7 +319,6 @@ relationship(X, Y) :-
 
 relationship(X, Y) :-
 	daughter(X, Y),
-	format("~w is the daughter of ~w", [X, Y]).
 
 relationship(X, Y) :-
 	son(X, Y),
