@@ -256,7 +256,7 @@ son(X, Y) :-
 sibling(X, Y) :-
 	parent(Z, X),
 	parent(Z, Y),
-	X \= Y.			% Stops it returning themself as a sibling
+	dif(X, Y).			% Stops it returning themself as a sibling
 
 sister(X, Y) :-
 	sibling(X, Y),
@@ -274,28 +274,28 @@ aunt(X, Y) :-
 	parent(Z, X),
 	parent(Z, W),
 	parent(W, Y),
-	X \= W,
+	dif(X, W),
 	female(X).
 
 uncle(X, Y) :-
 	parent(Z, X),
 	parent(Z, W),
 	parent(W, Y),
-	X \= W,
+	dif(X, W),
 	male(X).
 
 neice(X, Y) :-
 	parent(Z, X),
 	parent(W, Z),
 	parent(W, Y),
-	Z \= Y,
+	dif(Z, Y),
 	female(X).
 
 nephew(X, Y) :-
 	parent(Z, X),
 	parent(W, Z),
 	parent(W, Y),
-	Z \= Y,
+	dif(Z, Y),
 	male(X).
 	
 
