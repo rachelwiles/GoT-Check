@@ -393,14 +393,6 @@ nephew(X, Y) :-
 	
 
 %____________________________________________________________
-% FIND RIGHTFUL HEIR
-
-rightful_heir(X) :-								% Inarguable, faultess logic.
-	parent(robert_baratheon, X),
-	status(X, alive).
-
-
-%____________________________________________________________
 % FIND RELATIONSHIP BETWEEN
 
 relationship(X, Y) :-
