@@ -436,7 +436,7 @@ relationship(X, Y) :-
 %-----------------------------------------------------
 % FIND IF ALIVE / DEAD - (done)
 
-is_alive(X) :-
+alive_or_dead(X) :-
 	status(X, Y),
 	format("Status: ~w", [Y]), nl.
 
@@ -445,7 +445,7 @@ is_alive(X) :-
 % CREATE CHARACTER PROFILE - (done)
 
 tell_me_about(X) :-
-	is_alive(X),
+	alive_or_dead(X),
 	parents(X, Parents),
 	format("Parents: ~w", [Parents]), nl, 
 	children(X, Children),
@@ -454,3 +454,32 @@ tell_me_about(X) :-
 	format("Siblings: ~w", [Siblings]), nl,
 	!.
 	
+
+%-----------------------------------------------------
+% FIND ANCESTOR - (done)
+
+% Terminating
+ancestor(X, Y) :-
+	parent(X, Y).
+
+% Looping
+ancestor(X, Y) :-
+	parent(X, Z),
+	ancestor(Z, Y).
+
+ancestors(X, Ancestors) :-
+	findall(A, ancestor(X, A), Ancestors).
+
+
+%-----------------------------------------------------
+% FIND DESCENDANTS - (done)
+
+descendant(X, Y) :-
+	ancestor(Y, X).
+
+descendants(X, Descendants) :-
+	findall(A, descendant(X, A), Descendants).
+
+
+%-----------------------------------------------------
+% FIND IF LINKED
