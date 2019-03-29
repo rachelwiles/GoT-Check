@@ -316,7 +316,8 @@ son(X, Y) :-
 sibling(X, Y) :-
 	parent(Z, X),
 	parent(Z, Y),
-	dif(X, Y).								% Stops it returning themself as a sibling
+	dif(X, Y).								% Stops it returning themself as a sibling.
+											%
 											% ISSUE: This alone returns the same sibling twice, 
 											% if looking for a list of who are whos siblings. 
 											% Necessary to create a list of siblings without duplicates
@@ -324,49 +325,43 @@ sibling(X, Y) :-
 											% minimalise further duplicates...
 
 list_siblings(X, Siblings) :-
-	setof(Y, X^sibling(X,Y), Siblings).
+	setof(Y, sibling(X,Y), Siblings).
+
+siblings(X, Y) :-
+	list_siblings(X, Siblings),
+	member(Y, Siblings).
 
 sister(X, Y) :-
-	list_siblings(X, Siblings),
-	member(Y, Siblings),
+	siblings(X, Y),
 	female(X).
 
 brother(X, Y) :-
-	list_siblings(X, Siblings),
-	member(Y, Siblings),
+	siblings(X, Y),
 	male(X).
 
 
 %-----------------------------------------------------
-% DEFINE FURTHER RELATIONSHIPS
+% DEFINE FURTHER RELATIONSHIPS - (done)
 
 aunt(X, Y) :-
-	parent(Z, X),
-	parent(Z, W),
-	parent(W, Y),
-	dif(X, W),
-	female(X).
+	sister(X, Z),
+	parent(Z, Y),
+	dif(X, Z).
 
 uncle(X, Y) :-
-	parent(Z, X),
-	parent(Z, W),
-	parent(W, Y),
-	dif(X, W),
-	male(X).
+	brother(X, Z),
+	parent(Z, Y),
+	dif(X, Z).
 
 neice(X, Y) :-
-	parent(Z, X),
-	parent(W, Z),
-	parent(W, Y),
-	dif(Z, Y),
-	female(X).
+	daughter(X, Z),
+	siblings(Z, Y),
+	dif(Y, Z).	
 
 nephew(X, Y) :-
-	parent(Z, X),
-	parent(W, Z),
-	parent(W, Y),
-	dif(Z, Y),
-	male(X).
+	son(X, Z),
+	siblings(Z, Y),
+	dif(Y, Z).	
 	
 
 %-----------------------------------------------------
@@ -374,7 +369,7 @@ nephew(X, Y) :-
 
 rightful_heir(X) :-
 	parent(robert_baratheon, X),
-	male(X).
+	status(X, alive).
 
 
 %-----------------------------------------------------
