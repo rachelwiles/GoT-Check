@@ -26,8 +26,6 @@ parent(catelyn_stark, bran_stark).
 parent(catelyn_stark, rickon_stark).
 parent(lyanna_stark, jon_snow).
 
-
-
 % House Tyrell
 parent(luthor_tyrell, mace_tyrell).
 parent(olenna_tyrell, mace_tyrell).
@@ -35,8 +33,6 @@ parent(mace_tyrell, margaery_tyrell).
 parent(mace_tyrell, loras_tyrell).
 parent(olenna_tyrell, margaery_tyrell).
 parent(olenna_tyrell, loras_tyrell).
-
-
 
 % House Targaryen
 % 1 unknown Targaryen
@@ -58,8 +54,6 @@ parent(rhaella_targaryen, daenerys_targaryen).
 parent(rhaegar_targaryen, rhaenys_targaryen).
 parent(rhaegar_targaryen, aegon_targaryen).
 parent(rhaegar_targaryen, jon_snow).
-
-
 
 % House Martell (+ Sand)
 % 1 unknown + 4 unknown children of Oberyn and Tyene. Another 3 bastard children of Oberyn.
@@ -84,14 +78,14 @@ parent(unknown_mother1_sand, obara_sand).
 parent(unknown_mother2_sand, nymeria_sand).
 parent(unknown_mother3_sand, sarella_sand).
 
-
-
 % House Greyjoy
 % 2 unknown Greyjoys
 parent(unknown_mother_greyjoy, balon_greyjoy).
-parent(unknown_mother_greyjoy, alannys_greyjoy).
+parent(unknown_mother_greyjoy, euron_greyjoy).
+parent(unknown_mother_greyjoy, aeron_greyjoy).
 parent(unknown_father_greyjoy, balon_greyjoy).
-parent(unknown_father_greyjoy, alannys_greyjoy).
+parent(unknown_father_greyjoy, euron_greyjoy).
+parent(unknown_father_greyjoy, aeron_greyjoy).
 parent(balon_greyjoy, rodrick_greyjoy).
 parent(balon_greyjoy, maron_greyjoy).
 parent(balon_greyjoy, yara_greyjoy).
@@ -100,8 +94,6 @@ parent(alannys_harlaw, rodrick_greyjoy).
 parent(alannys_harlaw, maron_greyjoy).
 parent(alannys_harlaw, yara_greyjoy).
 parent(alannys_harlaw, theon_greyjoy).
-
-
 
 % House Lannister
 % 1 unknown Lannister
@@ -125,8 +117,6 @@ parent(kevan_lannister, lancel_lannister).
 parent(kevan_lannister, willem_lannister).
 parent(kevan_lannister, martyn_lannister).
 
-
-
 % House Baratheon
 parent(steffon_baratheon, robert_baratheon).
 parent(steffon_baratheon, stannis_baratheon).
@@ -139,12 +129,12 @@ parent(stannis_baratheon, shireen_baratheon).
 parent(selyse_baratheon, shireen_baratheon).
 
 
-
 %-----------------------------------------------------
 % ADD GENDER TO DATABASE - (done)
 
 male(aegon_targaryen).
 male(aegon_V_targaryen).
+male(aeron_greyjoy).
 male(aerys_targaryen).
 male(balon_greyjoy).
 male(benjen_stark).
@@ -154,6 +144,7 @@ male(daeron_targaryen).
 male(doran_martell).
 male(duncan_targaryen).
 male(eddard_stark).
+male(euron_greyjoy).
 male(gendry).
 male(jaime_lannister).
 male(joffery_lannister).
@@ -186,7 +177,6 @@ male(tywin_lannister).
 male(unknown_father_greyjoy).
 male(viserys_targaryen).
 male(willem_lannister).
-female(alannys_greyjoy).
 female(alannys_harlaw).
 female(arya_stark).
 female(cassana_estermont).
@@ -219,8 +209,76 @@ female(unknown_mother_stark).
 female(unknown_mother_targaryen).
 female(yara_greyjoy).
 
+
 %-----------------------------------------------------
-% ALIVE OR DEAD
+% ALIVE OR DEAD (OR UNKNOWN) - (done)
+
+alive(arya_stark).
+alive(bran_stark).
+alive(cersei_lannister).
+alive(daenerys_targaryen).
+alive(ellaria_sand).
+alive(gendry).
+alive(jaime_lannister).
+alive(jon_snow).
+alive(sansa_stark).
+alive(theon_greyjoy).
+alive(tyrion_lannister).
+alive(yara_greyjoy).
+dead(aegon_targaryen).
+dead(aegon_V_targaryen).
+dead(aerys_targaryen).
+dead(balon_greyjoy).
+dead(benjen_stark).
+dead(brandon_stark).
+dead(cassana_estermont).
+dead(catelyn_stark).
+dead(daeron_targaryen).
+dead(doran_martell).
+dead(duncan_targaryen).
+dead(eddard_stark).
+dead(ella_martell).
+dead(joffery_lannister).
+dead(kevan_lannister).
+dead(lancel_lannister).
+dead(loras_tyrell).
+dead(luthor_tyrell).
+dead(lyanna_stark).
+dead(mace_tyrell).
+dead(margaery_tyrell).
+dead(maron_greyjoy).
+dead(martyn_lannister).
+dead(myrcella_lannister).
+dead(nymeria_sand).
+dead(obara_sand).
+dead(oberyn_martell).
+dead(olenna_tyrell).
+dead(renly_baratheon).
+dead(rhaegar_targaryen).
+dead(rhaella_targaryen).
+dead(rhaenys_targaryen).
+dead(rickard_stark).
+dead(rickon_stark).
+dead(robb_stark).
+dead(robert_baratheon).
+dead(rodrick_greyjoy).
+dead(selyse_baratheon).
+dead(shireen_baratheon).
+dead(stannis_baratheon).
+dead(steffon_baratheon).
+dead(tommen_lannister).
+dead(trystane_martell).
+dead(tyene_sand).
+dead(tytos_lannister).
+dead(tywin_lannister).
+dead(viserys_targaryen).
+dead(willem_lannister).
+died(joanna_lannister).
+died(lewyn_martell).
+
+unknown(X) :-
+	not(alive(X)),
+	not(dead(X)).
 
 
 %-----------------------------------------------------
