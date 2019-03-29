@@ -311,19 +311,29 @@ son(X, Y) :-
 
 
 %-----------------------------------------------------
-% DEFINE SIBLING RELATIONSHIP
+% DEFINE SIBLING RELATIONSHIP - (done)
 
 sibling(X, Y) :-
 	parent(Z, X),
 	parent(Z, Y),
-	dif(X, Y).			% Stops it returning themself as a sibling
+	dif(X, Y).								% Stops it returning themself as a sibling
+											% ISSUE: This alone returns the same sibling twice, 
+											% if looking for a list of who are whos siblings. 
+											% Necessary to create a list of siblings without duplicates
+											% and lookup further relationships from this list, to 
+											% minimalise further duplicates...
+
+list_siblings(X, Siblings) :-
+	setof(Y, X^sibling(X,Y), Siblings).
 
 sister(X, Y) :-
-	sibling(X, Y),
+	list_siblings(X, Siblings),
+	member(Y, Siblings),
 	female(X).
 
 brother(X, Y) :-
-	sibling(X, Y),
+	list_siblings(X, Siblings),
+	member(Y, Siblings),
 	male(X).
 
 
@@ -412,7 +422,7 @@ relationship(X, Y) :-
 
 
 %-----------------------------------------------------
-% FIND IF ALIVE / DEAD
+% FIND IF ALIVE / DEAD - (done)
 
 is_alive(X) :-
 	status(X, Y),
