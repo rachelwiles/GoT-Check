@@ -1,11 +1,13 @@
-
-
-%-----------------------------------------------------
-% DATABASE OF ALL MAJOR HOUSES - (done)
+%--------------------GoT Check--------------------
 % Accurate as of end of season 7 (excluding events in the books)
 
+% Includes all major houses in game of thrones, their family trees, gender and status.
+% For full list of applications, see accompanying README for example queries.
+
+%____________________________________________________________
+% DATABASE OF ALL MAJOR HOUSES
+
 % House Stark
-% 1 unknown Stark
 parent(rickard_stark, brandon_stark).
 parent(rickard_stark, eddard_stark).
 parent(rickard_stark, benjen_stark).
@@ -35,8 +37,6 @@ parent(olenna_tyrell, margaery_tyrell).
 parent(olenna_tyrell, loras_tyrell).
 
 % House Targaryen
-% 1 unknown Targaryen
-% 2 siblings of highest member in family tree (i.e. does not fall into parent relation).
 parent(aegon_V_targaryen, duncan_targaryen).
 parent(aegon_V_targaryen, aerys_targaryen).
 parent(aegon_V_targaryen, rhaella_targaryen).
@@ -56,7 +56,6 @@ parent(rhaegar_targaryen, aegon_targaryen).
 parent(rhaegar_targaryen, jon_snow).
 
 % House Martell (+ Sand)
-% 1 unknown + 4 unknown children of Oberyn and Tyene. Another 3 bastard children of Oberyn.
 parent(unknown_mother_martell, doran_martell).
 parent(unknown_mother_martell, ella_martell).
 parent(unknown_mother_martell, oberyn_martell).
@@ -79,7 +78,6 @@ parent(unknown_mother2_sand, nymeria_sand).
 parent(unknown_mother3_sand, sarella_sand).
 
 % House Greyjoy
-% 2 unknown Greyjoys
 parent(unknown_mother_greyjoy, balon_greyjoy).
 parent(unknown_mother_greyjoy, euron_greyjoy).
 parent(unknown_mother_greyjoy, aeron_greyjoy).
@@ -96,7 +94,6 @@ parent(alannys_harlaw, yara_greyjoy).
 parent(alannys_harlaw, theon_greyjoy).
 
 % House Lannister
-% 1 unknown Lannister
 parent(unknown_mother_lannister, tywin_lannister).
 parent(unknown_mother_lannister, kevan_lannister).
 parent(tytos_lannister, tywin_lannister).
@@ -129,8 +126,8 @@ parent(stannis_baratheon, shireen_baratheon).
 parent(selyse_baratheon, shireen_baratheon).
 
 
-%-----------------------------------------------------
-% ADD GENDER TO DATABASE - (done)
+%____________________________________________________________
+% ADD GENDER TO DATABASE
 
 male(aegon_targaryen).
 male(aegon_V_targaryen).
@@ -210,8 +207,8 @@ female(unknown_mother_targaryen).
 female(yara_greyjoy).
 
 
-%-----------------------------------------------------
-% ALIVE OR DEAD (OR UNKNOWN) - (done)
+%____________________________________________________________
+% ALIVE OR DEAD (OR UNKNOWN)
 
 status(arya_stark, alive).
 status(bran_stark, alive).
@@ -275,36 +272,29 @@ status(viserys_targaryen, dead).
 status(willem_lannister, dead).
 status(joanna_lannister, dead).
 status(lewyn_martell, dead).
+status(the_hound, alive).
+status(meryn_trant, dead).
+status(ilyn_payne, alive).
+status(polliver, dead).
+status(the_mountain, alive).
+status(rorge, dead).
+status(walder_frey, dead).
+status(melisandre, alive).
+status(beric_dondarrion, alive).
+status(thoros_of_myr, dead).
 
 
+
+
+% For those unclear if dead or alive...
 status(X, unknown) :-
-	not(status(X, alive)),					% Example of 'not' query
+	not(status(X, alive)),						% Example of 'not' query
 	not(status(X, dead)),
-	!.
+	!.											% Example of a cut '!' to stop backtracking
 
 
-%-----------------------------------------------------
-% DEFINE PARENT RELATIONSHIP - just using parent (done)
-
-mother(X, Y) :-
-	parent(X, Y),
-	female(X).
-
-father(X, Y) :-
-	parent(X, Y),
-	male(X).
-
-parents(X, Parents) :-
-	setof(Y, parent(Y, X), Parents),
-	!.
-
-parents(X, Parents) :-
-	not(setof(Y, parent(Y, X), Parents)),
-	Parents = unknown.
-
-
-%-----------------------------------------------------
-% DEFINE CHILD RELATIONSHIP - just using parent (done)
+%____________________________________________________________
+% DEFINE CHILD RELATIONSHIP - just using parent + gender facts
 
 child(X, Y) :-
 	parent(Y, X).
@@ -322,32 +312,53 @@ children(X, Children) :-
 	!.
 
 children(X, Children) :-
-	not(setof(Y, parent(X,Y), Children)),
-	Children is 0.
+	not(setof(Y, parent(X,Y), Children)),		% If not in the list, children is unknown.
+	Children = none.							% '=' assigns parents to string 'unknown'
 
 
-%-----------------------------------------------------
-% DEFINE SIBLING RELATIONSHIP - (done)
+%____________________________________________________________
+% DEFINE MOTHER/FATHER RELATIONSHIP - just using parent + gender facts
+
+mother(X, Y) :-
+	parent(X, Y),
+	female(X).
+
+father(X, Y) :-
+	parent(X, Y),
+	male(X).
+
+parents(X, Parents) :-
+	setof(Y, parent(Y, X), Parents),
+	!.
+
+parents(X, Parents) :-
+	not(setof(Y, parent(Y, X), Parents)),		
+	Parents = unknown.								
+
+%____________________________________________________________
+% DEFINE SIBLING RELATIONSHIP
 
 sibling(X, Y) :-
 	parent(Z, X),
 	parent(Z, Y),
-	dif(X, Y).								% Stops it returning themself as a sibling.
-											%
-											% ISSUE: This alone returns the same sibling twice, 
-											% if looking for a list of who are whos siblings. 
-											% Necessary to create a list of siblings without duplicates
-											% and lookup further relationships from this list, to 
-											% minimalise further duplicates...
+	dif(X, Y).									% Stops it returning themself as a sibling.
+						
+
+		% ISSUE: This alone returns the same sibling twice, 
+		% if looking for a list of who are whos siblings. 
+		% Necessary to create a list of siblings without duplicates
+		% and lookup further relationships from this list, to 
+		% minimalise further duplicates...
+
 
 list_siblings(X, Siblings) :-
-	setof(Y, sibling(X,Y), Siblings);
-	Siblings is 0.
+	setof(Y, sibling(X,Y), Siblings);			% Creates list of all siblings, excluding duplicates. 
+	Siblings = none.							% If no siblings, returns none.
 
 siblings(X, Y) :-
 	list_siblings(X, Siblings),
-	member(Y, Siblings).
-
+	member(Y, Siblings).						% Checks if the queried sibling is a member of the
+												% list of siblings for that person.
 sister(X, Y) :-
 	siblings(X, Y),
 	female(X).
@@ -357,13 +368,13 @@ brother(X, Y) :-
 	male(X).
 
 
-%-----------------------------------------------------
-% DEFINE FURTHER RELATIONSHIPS - (done)
+%____________________________________________________________
+% DEFINE FURTHER RELATIONSHIPS
 
 aunt(X, Y) :-
 	sister(X, Z),
 	parent(Z, Y),
-	dif(X, Z).
+	dif(X, Z).									% dif(X, Z) ensures that X is different to Z.
 
 uncle(X, Y) :-
 	brother(X, Z),
@@ -381,16 +392,16 @@ nephew(X, Y) :-
 	dif(Y, Z).	
 	
 
-%-----------------------------------------------------
-% FIND RIGHTFUL HEIR - (done)
+%____________________________________________________________
+% FIND RIGHTFUL HEIR
 
-rightful_heir(X) :-
+rightful_heir(X) :-								% Inarguable, faultess logic.
 	parent(robert_baratheon, X),
 	status(X, alive).
 
 
-%-----------------------------------------------------
-% FIND RELATIONSHIP BETWEEN - (done)
+%____________________________________________________________
+% FIND RELATIONSHIP BETWEEN
 
 relationship(X, Y) :-
 	mother(X, Y),
@@ -433,16 +444,16 @@ relationship(X, Y) :-
 	format("~w is the nephew of ~w", [X, Y]), nl.
 
 
-%-----------------------------------------------------
-% FIND IF ALIVE / DEAD - (done)
+%____________________________________________________________
+% FIND IF ALIVE / DEAD
 
 alive_or_dead(X) :-
 	status(X, Y),
 	format("Status: ~w", [Y]), nl.
 
 
-%-----------------------------------------------------
-% CREATE CHARACTER PROFILE - (done)
+%____________________________________________________________
+% CREATE CHARACTER PROFILE
 
 tell_me_about(X) :-
 	alive_or_dead(X),
@@ -455,31 +466,79 @@ tell_me_about(X) :-
 	!.
 	
 
-%-----------------------------------------------------
-% FIND ANCESTOR - (done)
+%____________________________________________________________
+% FIND ANCESTOR
 
-% Terminating
-ancestor(X, Y) :-
+ancestor(X, Y) :-								% Terminating
 	parent(X, Y).
 
-% Looping
-ancestor(X, Y) :-
+ancestor(X, Y) :-								% Looping
 	parent(X, Z),
 	ancestor(Z, Y).
 
-ancestors(X, Ancestors) :-
-	findall(A, ancestor(X, A), Ancestors).
+ancestors(X, Ancestor_of) :-
+	findall(A, ancestor(X, A), Ancestor_of).
 
 
-%-----------------------------------------------------
-% FIND DESCENDANTS - (done)
+%____________________________________________________________
+% FIND DESCENDANTS
 
 descendant(X, Y) :-
 	ancestor(Y, X).
 
-descendants(X, Descendants) :-
-	findall(A, descendant(X, A), Descendants).
+descendants(X, Descendant_of) :-
+	findall(A, descendant(X, A), Descendant_of).
 
 
-%-----------------------------------------------------
-% FIND IF LINKED
+%____________________________________________________________
+% ARYAS LIST 
+
+on_list(the_hound).
+on_list(meryn_trant).
+on_list(cersei_lannister).
+on_list(joffery_lannister).
+on_list(ilyn_payne).
+on_list(polliver).
+on_list(the_mountain).
+on_list(rorge).
+on_list(walder_frey).
+on_list(tywin_lannister).
+on_list(melisandre).
+on_list(beric_dondarrion).
+on_list(thoros_of_myr).
+
+still_kicking(X) :-
+	on_list(X), 
+	status(X, alive).
+
+already_dead(X) :-
+	on_list(X),
+	status(X, dead).
+
+not_dead_yet(Not_dead) :-
+	findall(X, still_kicking(X), Not_dead).
+
+ticked_off(Done) :-
+	findall(X, already_dead(X), Done).
+
+aryas_list :-
+	print("ARYAS TOP SECRET LIST. KEEP OUT."), nl,
+	findall(X, on_list(X), MainList),
+	length(MainList, LMainList),									% Find length of list and return it as LMainList.
+	ticked_off(List),
+	not_dead_yet(AnotherList),
+	format("Done: ~w", [List]), nl,
+	format("Still to go: ~w", [AnotherList]), nl,
+	length(AnotherList, LCompletedList),
+	Percent is ((LMainList - LCompletedList) / LMainList) * 100,	% Maths operators.
+	Percentage is round(Percent),									% Round to the nearest integer.
+	format("Percentage complete: ~w%", [Percentage]), nl.
+
+
+%____________________________________________________________
+% RIGHTFUL HEIR
+
+rightful_heir(X) :-								% Inarguable, faultess logic.
+	parent(robert_baratheon, X),
+	status(X, alive).
+
