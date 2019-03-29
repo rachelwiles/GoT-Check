@@ -276,9 +276,9 @@ status(willem_lannister, dead).
 status(joanna_lannister, dead).
 status(lewyn_martell, dead).
 
-% Example of 'not' query
+
 status(X, unknown) :-
-	not(status(X, alive)),
+	not(status(X, alive)),					% Example of 'not' query
 	not(status(X, dead)),
 	!.
 
@@ -309,6 +309,9 @@ son(X, Y) :-
 	parent(Y, X),
 	male(X).
 
+children(X, Children) :-
+	setof(Y, parent(X,Y), Children);
+	Children is 0.
 
 %-----------------------------------------------------
 % DEFINE SIBLING RELATIONSHIP - (done)
@@ -325,7 +328,8 @@ sibling(X, Y) :-
 											% minimalise further duplicates...
 
 list_siblings(X, Siblings) :-
-	setof(Y, sibling(X,Y), Siblings).
+	setof(Y, sibling(X,Y), Siblings);
+	Siblings is 0.
 
 siblings(X, Y) :-
 	list_siblings(X, Siblings),
@@ -377,43 +381,43 @@ rightful_heir(X) :-
 
 relationship(X, Y) :-
 	mother(X, Y),
-	format("~w is the mother of ~w", [X, Y]).
+	format("~w is the mother of ~w", [X, Y]), nl.
 
 relationship(X, Y) :-
 	father(X, Y),
-	format("~w is the father of ~w", [X, Y]).
+	format("~w is the father of ~w", [X, Y]), nl.
 
 relationship(X, Y) :-
 	daughter(X, Y),
-	format("~w is the daughter of ~w", [X, Y]).
+	format("~w is the daughter of ~w", [X, Y]), nl.
 
 relationship(X, Y) :-
 	son(X, Y),
-	format("~w is the son of ~w", [X, Y]).
+	format("~w is the son of ~w", [X, Y]), nl.
 
 relationship(X, Y) :-
 	sister(X, Y),
-	format("~w is the sister of ~w", [X, Y]).
+	format("~w is the sister of ~w", [X, Y]), nl.
 
 relationship(X, Y) :-
 	brother(X, Y),
-	format("~w is the brother of ~w", [X, Y]).
+	format("~w is the brother of ~w", [X, Y]), nl.
 
 relationship(X, Y) :-
 	aunt(X, Y),
-	format("~w is the aunt of ~w", [X, Y]).
+	format("~w is the aunt of ~w", [X, Y]), nl.
 
 relationship(X, Y) :-
 	uncle(X, Y),
-	format("~w is the uncle of ~w", [X, Y]).
+	format("~w is the uncle of ~w", [X, Y]), nl.
 
 relationship(X, Y) :-
 	neice(X, Y),
-	format("~w is the neice of ~w", [X, Y]).
+	format("~w is the neice of ~w", [X, Y]), nl.
 
 relationship(X, Y) :-
 	nephew(X, Y),
-	format("~w is the nephew of ~w", [X, Y]).
+	format("~w is the nephew of ~w", [X, Y]), nl.
 
 
 %-----------------------------------------------------
@@ -421,4 +425,21 @@ relationship(X, Y) :-
 
 is_alive(X) :-
 	status(X, Y),
-	format("Status: ~w", [Y]).
+	format("Status: ~w", [Y]), nl.
+
+
+%-----------------------------------------------------
+% CREATE CHARACTER PROFILE - (done)
+
+tell_me_about(X) :-
+	is_alive(X),
+	mother(Mother, X),
+	format("Mother: ~w", [Mother]), nl, 
+	father(Father, X),
+	format("Father: ~w", [Father]), nl,
+	children(X, Children),
+	format("Children: ~w", [Children]), nl,
+	list_siblings(X, Siblings),
+	format("Siblings: ~w", [Siblings]), nl,
+	!.
+	
