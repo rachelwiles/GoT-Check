@@ -276,6 +276,7 @@ status(willem_lannister, dead).
 status(joanna_lannister, dead).
 status(lewyn_martell, dead).
 
+% Example of 'not' query
 status(X, unknown) :-
 	not(status(X, alive)),
 	not(status(X, dead)),
@@ -408,3 +409,11 @@ relationship(X, Y) :-
 relationship(X, Y) :-
 	nephew(X, Y),
 	format("~w is the nephew of ~w", [X, Y]).
+
+
+%-----------------------------------------------------
+% FIND IF ALIVE / DEAD
+
+is_alive(X) :-
+	status(X, Y),
+	format("Status: ~w", [Y]).
