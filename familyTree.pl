@@ -213,72 +213,73 @@ female(yara_greyjoy).
 %-----------------------------------------------------
 % ALIVE OR DEAD (OR UNKNOWN) - (done)
 
-alive(arya_stark).
-alive(bran_stark).
-alive(cersei_lannister).
-alive(daenerys_targaryen).
-alive(ellaria_sand).
-alive(gendry).
-alive(jaime_lannister).
-alive(jon_snow).
-alive(sansa_stark).
-alive(theon_greyjoy).
-alive(tyrion_lannister).
-alive(yara_greyjoy).
-dead(aegon_targaryen).
-dead(aegon_V_targaryen).
-dead(aerys_targaryen).
-dead(balon_greyjoy).
-dead(benjen_stark).
-dead(brandon_stark).
-dead(cassana_estermont).
-dead(catelyn_stark).
-dead(daeron_targaryen).
-dead(doran_martell).
-dead(duncan_targaryen).
-dead(eddard_stark).
-dead(ella_martell).
-dead(joffery_lannister).
-dead(kevan_lannister).
-dead(lancel_lannister).
-dead(loras_tyrell).
-dead(luthor_tyrell).
-dead(lyanna_stark).
-dead(mace_tyrell).
-dead(margaery_tyrell).
-dead(maron_greyjoy).
-dead(martyn_lannister).
-dead(myrcella_lannister).
-dead(nymeria_sand).
-dead(obara_sand).
-dead(oberyn_martell).
-dead(olenna_tyrell).
-dead(renly_baratheon).
-dead(rhaegar_targaryen).
-dead(rhaella_targaryen).
-dead(rhaenys_targaryen).
-dead(rickard_stark).
-dead(rickon_stark).
-dead(robb_stark).
-dead(robert_baratheon).
-dead(rodrick_greyjoy).
-dead(selyse_baratheon).
-dead(shireen_baratheon).
-dead(stannis_baratheon).
-dead(steffon_baratheon).
-dead(tommen_lannister).
-dead(trystane_martell).
-dead(tyene_sand).
-dead(tytos_lannister).
-dead(tywin_lannister).
-dead(viserys_targaryen).
-dead(willem_lannister).
-died(joanna_lannister).
-died(lewyn_martell).
+status(arya_stark, alive).
+status(bran_stark, alive).
+status(cersei_lannister, alive).
+status(daenerys_targaryen, alive).
+status(ellaria_sand, alive).
+status(gendry, alive).
+status(jaime_lannister, alive).
+status(jon_snow, alive).
+status(sansa_stark, alive).
+status(theon_greyjoy, alive).
+status(tyrion_lannister, alive).
+status(yara_greyjoy, alive).
+status(aegon_targaryen, dead).
+status(aegon_V_targaryen, dead).
+status(aerys_targaryen, dead).
+status(balon_greyjoy, dead).
+status(benjen_stark, dead).
+status(brandon_stark, dead).
+status(cassana_estermont, dead).
+status(catelyn_stark, dead).
+status(daeron_targaryen, dead).
+status(doran_martell, dead).
+status(duncan_targaryen, dead).
+status(eddard_stark, dead).
+status(ella_martell, dead).
+status(joffery_lannister, dead).
+status(kevan_lannister, dead).
+status(lancel_lannister, dead).
+status(loras_tyrell, dead).
+status(luthor_tyrell, dead).
+status(lyanna_stark, dead).
+status(mace_tyrell, dead).
+status(margaery_tyrell, dead).
+status(maron_greyjoy, dead).
+status(martyn_lannister, dead).
+status(myrcella_lannister, dead).
+status(nymeria_sand, dead).
+status(obara_sand, dead).
+status(oberyn_martell, dead).
+status(olenna_tyrell, dead).
+status(renly_baratheon, dead).
+status(rhaegar_targaryen, dead).
+status(rhaella_targaryen, dead).
+status(rhaenys_targaryen, dead).
+status(rickard_stark, dead).
+status(rickon_stark, dead).
+status(robb_stark, dead).
+status(robert_baratheon, dead).
+status(rodrick_greyjoy, dead).
+status(selyse_baratheon, dead).
+status(shireen_baratheon, dead).
+status(stannis_baratheon, dead).
+status(steffon_baratheon, dead).
+status(tommen_lannister, dead).
+status(trystane_martell, dead).
+status(tyene_sand, dead).
+status(tytos_lannister, dead).
+status(tywin_lannister, dead).
+status(viserys_targaryen, dead).
+status(willem_lannister, dead).
+status(joanna_lannister, dead).
+status(lewyn_martell, dead).
 
-unknown(X) :-
-	not(alive(X)),
-	not(dead(X)).
+status(X, unknown) :-
+	not(status(X, alive)),
+	not(status(X, dead)),
+	!.
 
 
 %-----------------------------------------------------
