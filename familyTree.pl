@@ -294,6 +294,14 @@ father(X, Y) :-
 	parent(X, Y),
 	male(X).
 
+parents(X, Parents) :-
+	setof(Y, parent(Y, X), Parents),
+	!.
+
+parents(X, Parents) :-
+	not(setof(Y, parent(Y, X), Parents)),
+	Parents = unknown.
+
 
 %-----------------------------------------------------
 % DEFINE CHILD RELATIONSHIP - just using parent (done)
@@ -310,8 +318,13 @@ son(X, Y) :-
 	male(X).
 
 children(X, Children) :-
-	setof(Y, parent(X,Y), Children);
+	setof(Y, parent(X,Y), Children),
+	!.
+
+children(X, Children) :-
+	not(setof(Y, parent(X,Y), Children)),
 	Children is 0.
+
 
 %-----------------------------------------------------
 % DEFINE SIBLING RELATIONSHIP - (done)
@@ -377,7 +390,7 @@ rightful_heir(X) :-
 
 
 %-----------------------------------------------------
-% FIND RELATIONSHIP BETWEEN
+% FIND RELATIONSHIP BETWEEN - (done)
 
 relationship(X, Y) :-
 	mother(X, Y),
@@ -433,10 +446,8 @@ is_alive(X) :-
 
 tell_me_about(X) :-
 	is_alive(X),
-	mother(Mother, X),
-	format("Mother: ~w", [Mother]), nl, 
-	father(Father, X),
-	format("Father: ~w", [Father]), nl,
+	parents(X, Parents),
+	format("Parents: ~w", [Parents]), nl, 
 	children(X, Children),
 	format("Children: ~w", [Children]), nl,
 	list_siblings(X, Siblings),
