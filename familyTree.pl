@@ -1,4 +1,4 @@
-%--------------------GoT Check--------------------
+%-------------------------GoT Check-------------------------
 % Accurate as of end of season 7 (excluding events in the books)
 
 % Includes all major houses in game of thrones, their family trees, gender and status.
@@ -469,7 +469,7 @@ ancestor(X, Y) :-								% Looping
 	ancestor(Z, Y).
 
 ancestors(X, Ancestor_of) :-
-	findall(A, ancestor(X, A), Ancestor_of).
+	findall(A, ancestor(X, A), Ancestor_of).	% Returns a list of all results for ancestor(X,Y).
 
 
 %____________________________________________________________
@@ -516,12 +516,12 @@ ticked_off(Done) :-
 aryas_list :-
 	print("ARYAS TOP SECRET LIST. KEEP OUT."), nl,
 	findall(X, on_list(X), MainList),
-	length(MainList, LMainList),									% Find length of list and return it as LMainList.
 	ticked_off(List),
-	not_dead_yet(AnotherList),
 	format("Done: ~w", [List]), nl,
+	not_dead_yet(AnotherList),
 	format("Still to go: ~w", [AnotherList]), nl,
-	length(AnotherList, LCompletedList),
+	length(AnotherList, LCompletedList),							% Find length of list and return it as LMainList.
+	length(MainList, LMainList),
 	Percent is ((LMainList - LCompletedList) / LMainList) * 100,	% Maths operators.
 	Percentage is round(Percent),									% Round to the nearest integer.
 	format("Percentage complete: ~w%", [Percentage]), nl.
