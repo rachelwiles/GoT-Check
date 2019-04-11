@@ -1,5 +1,6 @@
 # :crossed_swords: GoT Check
-## Game of Thrones character database and family trees in Prolog.
+## Game of Thrones character database and family trees in Prolog
+### [Article explaining this repo can be found here](https://medium.freecodecamp.org/how-to-learn-prolog-by-watching-game-of-thrones-4852ea960017)
 #### :warning:**ACCURATE UP TO THE END OF SEASON 7 - FULL OF SPOILERS!**:skull:
 #### Run using SWI-Prolog or similar. 
 GoTCheck.pl analyses facts about parents, gender, and dead/alive status of Game of Thrones characters in all major houses, and implements rules. Queries call upon these rules, which use recursion and lists to sift through the database, analysing family trees and returning information.
