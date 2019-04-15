@@ -33,8 +33,9 @@ parent(luthor_tyrell, mace_tyrell).
 parent(olenna_tyrell, mace_tyrell).
 parent(mace_tyrell, margaery_tyrell).
 parent(mace_tyrell, loras_tyrell).
-parent(olenna_tyrell, margaery_tyrell).
-parent(olenna_tyrell, loras_tyrell).
+parent(alerie_hightower, margaery_tyrell).
+parent(alerie_hightower, loras_tyrell).
+
 
 % House Targaryen
 parent(aegon_V_targaryen, duncan_targaryen).
@@ -205,6 +206,7 @@ female(unknown_mother_martell).
 female(unknown_mother_stark).
 female(unknown_mother_targaryen).
 female(yara_greyjoy).
+female(alerie_hightower).
 
 
 %____________________________________________________________
@@ -282,6 +284,7 @@ status(walder_frey, dead).
 status(melisandre, alive).
 status(beric_dondarrion, alive).
 status(thoros_of_myr, dead).
+status(alerie_hightower, dead).
 
 
 
